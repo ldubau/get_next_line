@@ -6,7 +6,7 @@
 /*   By: leondubau <leondubau@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 12:41:43 by ldubau            #+#    #+#             */
-/*   Updated: 2025/11/21 20:17:36 by leondubau        ###   ########.fr       */
+/*   Updated: 2025/11/23 11:37:27 by leondubau        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,21 @@
 # define BUFFER_SIZE 3
 # endif
 
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i ++;
-	return (i);
-}
-
 size_t	len_stock(const char *s)
 {
 	size_t	i;
 
 	i = 0;
 	while (s[i] != '\0' && s[i] != '\n')
+		i ++;
+	return (i);
+}
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i] != '\0')
 		i ++;
 	return (i);
 }
@@ -104,19 +103,6 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-void	write_line(char *dst, char *src)
-{
-	int		i;
-
-	i = 0;
-	while (src[i] && src[i] != '\n')
-	{
-		dst[i] = src[i];
-		i ++;
-	}
-	dst[i] = '\0';
-}
-
 
 char	*get_next_line(int fd)
 {
@@ -124,14 +110,21 @@ char	*get_next_line(int fd)
 	char	*line;
 	char		*tmp;
 	int			size_read;
+	int			x;
 
+	x = 0;
 	size_read = 1;
 	line = ft_strdup("");
-
 	if (!line)
 		return (NULL);
-	while (size_read > 0 && !ft_strchr(buf, '\n'))
+	if (buf[0] != '\0')
 	{
+		line = ft_strdup(ft_strchr(buf, '\n') + 1);
+		x = 1;
+	}
+	while (size_read > 0 && (!ft_strchr(buf, '\n') || x == 1))
+	{
+		x = 0;
 		size_read = read(fd, buf, BUFFER_SIZE);
 		if (size_read < BUFFER_SIZE)
 			buf[size_read] = '\0';
@@ -144,15 +137,37 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-
-
-int main(void)
+int    main(void)
 {
-	int fd;
-	fd = open("text.txt", O_RDONLY);
-	if (fd != -1)
-		printf("%s", get_next_line(fd));
-		printf("%s", get_next_line(fd));
-		// printf("%s", get_next_line(fd));
-	return 0;
+    char    *line;
+    int        i;
+    int        fd;
+    fd = open("text.txt", O_RDONLY);
+    i = 1;
+    while (i < 19)
+    {
+        line = get_next_line(fd);
+        printf("line [%02d]: %s", i, line);
+        free(line);
+        i++;
+    }
+	if (i == -1)
+	{
+		printf("<ERROR>\n");
+		close(fd);
+		return (-1);
+	}
+    close(fd);
+    return (0);
 }
+
+// int main(void)
+// {
+// 	int fd;
+// 	fd = open("text.txt", O_RDONLY);
+// 	if (fd != -1)
+// 		printf("%s", get_next_line(fd));
+// 		printf("%s", get_next_line(fd));
+// 		// printf("%s", get_next_line(fd));
+// 	return 0;
+// }
