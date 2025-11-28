@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leondubau <leondubau@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ldubau <ldubau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 16:07:47 by leondubau         #+#    #+#             */
-/*   Updated: 2025/11/26 16:53:46 by leondubau        ###   ########.fr       */
+/*   Updated: 2025/11/28 16:07:34 by ldubau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ size_t	my_strlen(const char *s)
 	size_t	i;
 
 	i = 0;
+	if (!s)
+		return (0);
 	while (s[i] != '\0')
 		i ++;
 	return (i);
@@ -65,4 +67,20 @@ char	*my_strjoin(const char *s1, const char *s2)
 	}
 	str[i + j] = '\0';
 	return (str);
+}
+
+void	*my_calloc(size_t count, size_t size)
+{
+	unsigned char	*ptr;
+	size_t			i;
+
+	if (count * size > (size_t) -1)
+		return (NULL);
+	ptr = malloc(count * size);
+	i = 0;
+	if (!ptr)
+		return (NULL);
+	while (i < count * size)
+		ptr[i ++] = '\0';
+	return (ptr);
 }
