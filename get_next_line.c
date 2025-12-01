@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldubau <ldubau@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leondubau <leondubau@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 12:41:43 by ldubau            #+#    #+#             */
-/*   Updated: 2025/11/29 19:40:20 by ldubau           ###   ########.fr       */
+/*   Updated: 2025/12/01 14:01:18 by leondubau        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,6 @@ char	*write_stock(char *stock, int fd, int size_read)
 			free(stock);
 		stock = tmp;
 	}
-	if (!buf && size_read <= 0 && !stock)
-	{
-		free(stock);
-		stock = NULL;
-	}
-	free(buf);
 	return (stock);
 }
 
@@ -110,24 +104,30 @@ char	*get_next_line(int fd)
 			return (NULL);
 		stock = tmp;
 	}
+	else if (my_strchr(stock, '\0'))
+	{
+		line = stock;
+		// free(stock);
+		stock = NULL;
+	}
 	return (line);
 }
 
-//  #include <stdio.h>
+ #include <stdio.h>
 
-// int	main(void)
-// {
-// 	char	*line;
-// 	int		i;
-// 	int		fd;
-// 	fd = open("41_with_nl", O_RDONLY);
-// 	i = 1;
-// 	line = get_next_line(fd);
-// 	while(line)
-// 	{
-// 		printf(" [%d]   ", printf("%s", line));
-// 		free(line);
-// 		line = get_next_line(fd);
-// 	}
-// 	return (0);
-// }
+int	main(void)
+{
+	char	*line;
+	// int		i;
+	int		fd;
+	fd = open("43_with_nl", O_RDONLY);
+	// i = 1;
+	line = get_next_line(fd);
+	while(line)
+	{
+		printf("%s", line);
+		free(line);
+		line = get_next_line(fd);
+	}
+	return (0);
+}

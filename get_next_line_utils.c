@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldubau <ldubau@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leondubau <leondubau@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 16:07:47 by leondubau         #+#    #+#             */
-/*   Updated: 2025/11/29 18:32:40 by ldubau           ###   ########.fr       */
+/*   Updated: 2025/12/01 13:58:49 by leondubau        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ char	*my_strjoin(char *s1, const char *s2)
 		str[i + j] = s2[j];
 		j ++;
 	}
-	// if (s1)
-	// 	i --;
 	str[i + j] = '\0';
 	return (str);
 }
