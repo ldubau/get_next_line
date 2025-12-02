@@ -6,7 +6,7 @@
 /*   By: leondubau <leondubau@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 12:41:43 by ldubau            #+#    #+#             */
-/*   Updated: 2025/12/02 15:39:02 by leondubau        ###   ########.fr       */
+/*   Updated: 2025/12/02 16:39:57 by leondubau        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,27 +87,9 @@ char	*write_stock(char *stock, int fd, int size_read)
 	return (stock);
 }
 
-char	*get_next_line(int fd)
+char	*next_line(char *stock)
 {
-	char		*line;
-	static char	*stock = NULL;
-	char		*tmp;
-	int		size_read;
-
-	size_read = 1;
-	if (fd < 0 || fd > 1023 || BUFFER_SIZE < 1)
-		return (NULL);
-	tmp = NULL;
-	stock = write_stock(stock, fd, size_read);
-	if (!stock)
-		return (NULL);
-	if (stock[0] == '\0')
-	{
-		free(stock);
-		stock = NULL;
-		return (NULL);
-	}
-	line = write_line(stock);
+	char	*tmp;
 	if (my_strchr(stock, '\n'))
 	{
 		tmp = my_strdupe(my_strchr(stock, '\n') + 1);
@@ -118,10 +100,32 @@ char	*get_next_line(int fd)
 	}
 	else
 	{
-		free (line);
-		line = stock;
+		free(stock);
 		stock = NULL;
 	}
+	return (stock);
+}
+
+char	*get_next_line(int fd)
+{
+	char		*line;
+	static char	*stock = NULL;
+	int		size_read;
+
+	size_read = 1;
+	if (fd < 0 || fd > 1023 || BUFFER_SIZE < 1)
+		return (NULL);
+	stock = write_stock(stock, fd, size_read);
+	if (!stock)
+		return (NULL);
+	if (stock[0] == '\0')
+	{
+		free(stock);
+		stock = NULL;
+		return (NULL);
+	}
+	line = write_line(stock);
+	stock = next_line(stock);
 	return (line);
 }
 
