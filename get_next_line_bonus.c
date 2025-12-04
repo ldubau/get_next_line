@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leondubau <leondubau@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 12:41:43 by ldubau            #+#    #+#             */
-/*   Updated: 2025/12/04 13:36:29 by leondubau        ###   ########.fr       */
+/*   Updated: 2025/12/04 13:36:22 by leondubau        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 #include <stdio.h>
 
 char	*my_strchr(const char *s, int c)
@@ -129,20 +129,33 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-// #include <stdio.h>
+//  #include <stdio.h>
 
 // int	main(void)
 // {
 // 	char	*line;
+// 	char	*line2;
 
 // 	int		fd;
+// 	int		fd2;
 // 	fd = open("text.txt", O_RDONLY);
+// 	fd2 = open("text.txt2", O_RDONLY);
 // 	line = get_next_line(fd);
-// 	while(line)
+// 	line2 = get_next_line(fd2);
+// 	while(line && line2)
 // 	{
-// 		printf("%s", line);
-// 		free(line);
-// 		line = get_next_line(fd);
+// 		if (line)
+// 		{
+// 			printf("%s", line);
+// 			free(line);
+// 			line = get_next_line(fd);
+// 		}
+// 		if (line2)
+// 		{
+// 			printf("%s", line2);
+// 			free(line2);
+// 			line2 = get_next_line(fd2);
+// 		}
 // 	}
 // 	return (0);
 // }
